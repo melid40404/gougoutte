@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gouttes - Calcul Mental</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <canvas id="game"></canvas>
+
+    <div class="hud">
+      <button id="pauseBtn" class="hud-btn" aria-label="Pause">II</button>
+      <div class="score">SCORE <span id="score">0</span></div>
+    </div>
+
+    <div class="lives" aria-label="Vies">
+      <span class="life"></span>
+      <span class="life"></span>
+      <span class="life"></span>
+    </div>
+
+    <div class="input" aria-live="polite">
+      <span id="inputValue"></span>
+    </div>
+
+    <div class="overlay" id="overlay" hidden>
+      <div class="panel">
+        <div class="title">Game Over</div>
+        <div class="final">Score: <span id="finalScore">0</span></div>
+        <div class="hint">Appuyez sur Entrée pour rejouer</div>
+      </div>
+    </div>
+
+    <div class="pause-veil" id="pauseVeil" hidden>
+      <div class="pause-panel">
+        <div class="pause-text">PAUSE</div>
+        <div class="pause-actions">
+          <button id="resumeBtn" class="hud-btn">Reprendre</button>
+          <button id="restartBtn" class="hud-btn">Recommencer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
