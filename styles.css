@@ -21,6 +21,8 @@ html, body {
   font-family: 'Nunito', system-ui, sans-serif;
   background: #0d2d39;
   color: var(--text);
+  overscroll-behavior: none;
+  touch-action: manipulation;
 }
 
 #app {
@@ -28,6 +30,7 @@ html, body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  touch-action: manipulation;
 }
 
 #game {
@@ -102,6 +105,48 @@ html, body {
   font-family: 'Bungee', cursive;
   font-size: 22px;
   letter-spacing: 2px;
+}
+
+.mobile-controls {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 12px 16px calc(16px + env(safe-area-inset-bottom));
+  display: none;
+  pointer-events: none;
+}
+
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(56px, 1fr));
+  gap: 10px;
+  max-width: 420px;
+  margin: 0 auto;
+  pointer-events: auto;
+}
+
+.key {
+  background: rgba(13, 53, 67, 0.9);
+  border: 2px solid rgba(233, 247, 247, 0.7);
+  color: var(--text);
+  font-family: 'Bungee', cursive;
+  font-size: 20px;
+  padding: 12px 0;
+  border-radius: 10px;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.key:active {
+  transform: translateY(1px);
+  background: rgba(13, 53, 67, 1);
+}
+
+.key-wide {
+  grid-column: span 1;
+  font-size: 18px;
 }
 
 .overlay {
@@ -193,5 +238,24 @@ html, body {
 
   .input {
     font-size: 18px;
+    bottom: 170px;
+  }
+
+  .mobile-controls {
+    display: block;
+  }
+
+  .keypad {
+    grid-template-columns: repeat(3, minmax(64px, 1fr));
+  }
+}
+
+@media (pointer: coarse) and (max-width: 900px) {
+  .input {
+    bottom: 170px;
+  }
+
+  .mobile-controls {
+    display: block;
   }
 }

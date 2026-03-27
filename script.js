@@ -10,6 +10,7 @@ const resumeBtn = document.getElementById('resumeBtn');
 const restartBtn = document.getElementById('restartBtn');
 const pauseBtn = document.getElementById('pauseBtn');
 const lifeEls = Array.from(document.querySelectorAll('.life'));
+const keypadButtons = Array.from(document.querySelectorAll('.key'));
 
 let width = 0;
 let height = 0;
@@ -23,6 +24,7 @@ let drops = [];
 let userInput = '';
 let paused = false;
 let gameOver = false;
+let lastPointerTime = 0;
 
 const noisePattern = createNoisePattern();
 
@@ -267,6 +269,31 @@ function checkAnswer(answer) {
   return false;
 }
 
+function canAcceptInput() {
+  return !paused && !gameOver;
+}
+
+function appendDigit(digit) {
+  if (!canAcceptInput()) return;
+  if (userInput.length < 6) {
+    userInput += digit;
+    inputEl.textContent = userInput;
+  }
+}
+
+function backspaceInput() {
+  if (!canAcceptInput()) return;
+  userInput = userInput.slice(0, -1);
+  inputEl.textContent = userInput;
+}
+
+function submitInput() {
+  if (!canAcceptInput()) return;
+  checkAnswer(parseInt(userInput, 10));
+  userInput = '';
+  inputEl.textContent = userInput;
+}
+
 function update(dt, time) {
   if (paused || gameOver) return;
 
@@ -327,18 +354,34 @@ window.addEventListener('keydown', (e) => {
   if (paused || gameOver) return;
 
   if (e.key >= '0' && e.key <= '9') {
-    if (userInput.length < 6) {
-      userInput += e.key;
-      inputEl.textContent = userInput;
-    }
+    appendDigit(e.key);
   } else if (e.key === 'Backspace') {
-    userInput = userInput.slice(0, -1);
-    inputEl.textContent = userInput;
+    backspaceInput();
   } else if (e.key === 'Enter') {
-    const ok = checkAnswer(parseInt(userInput, 10));
-    userInput = '';
-    inputEl.textContent = userInput;
+    submitInput();
   }
+});
+
+keypadButtons.forEach((btn) => {
+  const key = btn.dataset.key;
+  btn.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    lastPointerTime = Date.now();
+    if (!key) return;
+    if (key === 'back') {
+      backspaceInput();
+    } else if (key === 'enter') {
+      submitInput();
+    } else {
+      appendDigit(key);
+    }
+  });
+
+  btn.addEventListener('click', (e) => {
+    if (Date.now() - lastPointerTime < 400) {
+      e.preventDefault();
+    }
+  });
 });
 
 pauseBtn.addEventListener('click', () => {
