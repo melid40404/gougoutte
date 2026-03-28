@@ -49,18 +49,6 @@ html, body {
   pointer-events: none;
 }
 
-.hud-btn {
-  pointer-events: auto;
-  background: rgba(13, 53, 67, 0.7);
-  border: 2px solid rgba(233, 247, 247, 0.7);
-  color: var(--text);
-  font-family: 'Bungee', cursive;
-  font-size: 14px;
-  padding: 6px 10px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
 .score {
   background: rgba(13, 53, 67, 0.7);
   padding: 8px 12px;
@@ -159,46 +147,6 @@ html, body {
 
 .overlay[hidden] {
   display: none;
-}
-
-.pause-veil {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  background: rgba(8, 30, 38, 0.85);
-  backdrop-filter: blur(3px);
-}
-
-.pause-veil[hidden] {
-  display: none;
-}
-
-.pause-text {
-  font-family: 'Bungee', cursive;
-  font-size: 36px;
-  letter-spacing: 4px;
-  color: var(--text);
-  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
-}
-
-.pause-panel {
-  display: grid;
-  gap: 16px;
-  place-items: center;
-}
-
-.pause-actions {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.pause-actions .hud-btn {
-  font-size: 13px;
-  padding: 8px 14px;
-  background: rgba(13, 53, 67, 0.9);
 }
 
 .panel {

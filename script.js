@@ -5,10 +5,6 @@ const scoreEl = document.getElementById('score');
 const finalScoreEl = document.getElementById('finalScore');
 const inputEl = document.getElementById('inputValue');
 const overlayEl = document.getElementById('overlay');
-const pauseVeilEl = document.getElementById('pauseVeil');
-const resumeBtn = document.getElementById('resumeBtn');
-const restartBtn = document.getElementById('restartBtn');
-const pauseBtn = document.getElementById('pauseBtn');
 const lifeEls = Array.from(document.querySelectorAll('.life'));
 const keypadButtons = Array.from(document.querySelectorAll('.key'));
 
@@ -22,7 +18,6 @@ let score = 0;
 let lives = 3;
 let drops = [];
 let userInput = '';
-let paused = false;
 let gameOver = false;
 let lastPointerTime = 0;
 
@@ -233,7 +228,6 @@ function loseLife() {
 function endGame() {
   gameOver = true;
   overlayEl.hidden = false;
-  pauseVeilEl.hidden = true;
   finalScoreEl.textContent = score;
 }
 
@@ -249,9 +243,6 @@ function resetGame() {
   updateLives();
   gameOver = false;
   overlayEl.hidden = true;
-  paused = false;
-  pauseVeilEl.hidden = true;
-  pauseBtn.textContent = 'II';
 }
 
 function checkAnswer(answer) {
@@ -270,7 +261,7 @@ function checkAnswer(answer) {
 }
 
 function canAcceptInput() {
-  return !paused && !gameOver;
+  return !gameOver;
 }
 
 function appendDigit(digit) {
@@ -295,7 +286,7 @@ function submitInput() {
 }
 
 function update(dt, time) {
-  if (paused || gameOver) return;
+  if (gameOver) return;
 
   elapsed += dt;
   spawnTimer += dt * 1000;
@@ -344,14 +335,7 @@ window.addEventListener('keydown', (e) => {
     return;
   }
 
-  if (e.key === 'p' || e.key === 'P') {
-    paused = !paused;
-    pauseVeilEl.hidden = !paused;
-    pauseBtn.textContent = paused ? '▶' : 'II';
-    return;
-  }
-
-  if (paused || gameOver) return;
+  if (gameOver) return;
 
   if (e.key >= '0' && e.key <= '9') {
     appendDigit(e.key);
@@ -382,22 +366,6 @@ keypadButtons.forEach((btn) => {
       e.preventDefault();
     }
   });
-});
-
-pauseBtn.addEventListener('click', () => {
-  paused = !paused;
-  pauseVeilEl.hidden = !paused;
-  pauseBtn.textContent = paused ? '▶' : 'II';
-});
-
-resumeBtn.addEventListener('click', () => {
-  paused = false;
-  pauseVeilEl.hidden = true;
-  pauseBtn.textContent = 'II';
-});
-
-restartBtn.addEventListener('click', () => {
-  resetGame();
 });
 
 updateLives();
